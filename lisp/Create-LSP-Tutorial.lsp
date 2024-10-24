@@ -1,10 +1,10 @@
 ;;Tutorial available at https://help.autodesk.com/view/ACDLT/2024/ENU/?guid=GUID-9999E8BF-CFA1-412F-A265-3568287DB77E
 
 ;; Displays a message box containing the entered text
-; (defun c:hello (/ msg) 
-;   (setq msg (getstring T "\nEnter a message: "))
-;   (alert msg)
-; )
+(defun c:hello (/ msg) 
+  (setq msg (getstring T "\nEnter a message: "))
+  (alert msg)
+)
 
 ;; Draws a line between two points
 (defun c:drawline (/ pt1 pt2 sv_clayer)  ;; Declared local variables
