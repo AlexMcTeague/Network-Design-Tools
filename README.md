@@ -1,5 +1,5 @@
-# AutoCAD-Network-Design-Tools
-This is a collection of automation scripts in LISP, Python, and VBA for AutoCAD. These scripts are being used to automate repetitive aspects of Fiber and Coax design.
+# Network-Design-Tools
+This is a collection of automation scripts for AutoCAD and ArcGIS. Languages include Python, VBA, Lisp, and AHK. These scripts are being used to automate repetitive aspects of Fiber and Coax design.
 
 ## Code Environment Setup
 1. Install VSCode: https://code.visualstudio.com/Download
@@ -7,13 +7,13 @@ This is a collection of automation scripts in LISP, Python, and VBA for AutoCAD.
 3. In this Github repository, click the green "Code" button above. Copy the Clone web URL.
 4. Open VSCode. On the Home page, select the option to clone a Git repository. Paste the Clone URL you copied and hit enter. This will re-create the repository on your computer.
 
-## Lisp Scripts
+## Lisp AutoCAD Scripts
 1. Follow AutoDesk's tutorial to setup the AutoLISP VSCode Extension: https://help.autodesk.com/view/ACDLT/2024/ENU/?guid=GUID-8EADDE55-CD92-422A-8493-9C7A19880629
 2. Use this repo's "lisp" subfolder as the workspace for AutoLISP.
 3. In AutoCAD, run the "APPLOAD" command. When the window opens, click the Startup Suite -> Contents button in the bottom right.
 4. Navigate to the script(s) you want to auto-load, and select them. This way the macros will be loaded any time AutoCAD starts. Repeat this process whenever you create a new script.
 
-## Python Scripts
+## Python AutoCAD Scripts
 1. Install Python: https://www.python.org/downloads/
 2. Python automatically installs a utility called "pip", but VSCode isn't configured to use it yet. use these steps to add pip to your PC's PATH:
     1. Find the Scripts folder in Python's Program files. On many PCs this is located at "C:\Users\username\AppData\Local\Programs\Python\Python###\Scripts". Copy the path of this folder.
