@@ -28,3 +28,7 @@ This is a collection of automation scripts for AutoCAD and ArcGIS. Languages inc
 5. Type "pip install pyautocad" and hit enter.
 6. You can use the Run And Debug menu to run python scripts, and they will interact with CAD.
 7. In the future this setup will be edited to allow running python scripts directly from AutoCAD, including user input.
+
+## Python ArcGIS Scripts
+1. This section is WIP
+2. Outdated instructions: https://developers.arcgis.com/python/latest/guide/get-started/
