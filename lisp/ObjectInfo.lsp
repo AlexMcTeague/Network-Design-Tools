@@ -1,7 +1,7 @@
 (defun c:objinfo (/ ent obj)
   (vl-load-com) ; Loads the extended AutoLISP functions related to ActiveX support
   
-  ; As the user to select an object
+  ; Asks the user to select an object
   (setq ent (car (entsel)))
   (setq obj (vlax-ename->vla-object ent))
   (princ "\n")
