@@ -4,7 +4,11 @@
   ; Asks the user to select an object
   (setq ent (car (entsel)))
   (setq obj (vlax-ename->vla-object ent))
+  (setq objpos (vlax-get obj 'InsertionPoint))
   (princ "\n")
+  
+  ; Asks the user to select a position for the new stamp
+  (setq stamppos (getpoint "\nSelect stamp position: "))
 
   ; Get the Object Data tables (there should only be one)
   (setq lst (ade_odgettables ent))
@@ -20,6 +24,29 @@
   (princ (strcat "Pole Tag: " tag "\n"))
   (princ (strcat "Attachment Height: " attach_ht "\n"))
   (princ (strcat "MR Category: " mr_cat "\n"))
+  
+  ; Switch to the Street Name Layer
+  (command "_LAYER"
+    "SET" "ST-NAME"
+    ""
+  )
+  
+  ; Change the default layer color to ByLayer
+  (command "_COLOR" "BYLAYER")
+  
+  ; Add an MText object with the fields
+  (command "_MTEXT"
+    stamppos ; Chosen position
+    "Style" "Arial" ; Arial style
+    "Height" "3" ; Text height
+    "Justify" "MC" ; Middle-Center justified
+    stamppos ; Second corner of new MText, same as the first (it will autosize to text anyway)
+    owner ; Each string is entered on a separate line
+    tag
+    attach_ht
+    mr_cat
+    "" ; Empty string input to finalize MText
+  )
   
   (princ) ; Prevents double-printed output
 )

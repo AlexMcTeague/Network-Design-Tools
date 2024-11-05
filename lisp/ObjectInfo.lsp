@@ -9,6 +9,11 @@
   ; Print the name of the object
   (princ (strcat "Object Name: " (vla-get-name obj) "\n"))
   
+  ; Print the coordinates of the object
+  (setq pos (vlax-get obj 'InsertionPoint))
+  ;(setq stringpos (strcat "(" (vla-get-x pos) " " (vla-get-y pos) " " (vla-get-z pos) ")"))
+  ;(princ (strcat "Coordinates: " stringpos "\n"))
+  
   ; Print the normal attributes/properties of the object
   (princ (strcat "--Object Properties--"))
   (vlax-dump-object obj)
