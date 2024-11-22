@@ -1,5 +1,6 @@
 (defun c:MeasureCallouts ( / pt1 pt2 dist midPoint angle)
   (setq textHeight 3.961325)
+  (setvar 'osmode 0) ; Turn off Object Snapping, which messes with object placement/math
   
   (while (setq pt1 (getpoint "\nSelect the first pole (point 1) or press Enter to exit: "))
     (setq pt2 (getpoint "\nSelect the second pole (point 2): "))
@@ -25,18 +26,43 @@
     ))
 
     ; Calculate the angle in radians
-    (setq angle (atan (/ 
-      (- (cadr pt2) (cadr pt1))
-      (- (car pt2) (car pt1))
+    (setq angleRad (atan (/ 
+      (- pt2Y pt1Y)
+      (- pt2X pt1X)
     )))
 
     ; Convert radians to degrees
-    (setq angle (* angle (/ 180 pi)))
+    (setq angle (* angleRad (/ 180 pi)))
 
-    ;; Create the text callout at the midpoint, rotated to match the angle
+    ; Create the text callout at the midpoint, rotated to match the angle
     (command "_.TEXT" midPoint textHeight angle (strcat (itoa dist) "'"))
 
     (princ (strcat "\nAerial span footage: " (itoa dist) "'"))
+    
+    ; Offset the chosen points by the text height and angle
+    (setq offsetVX (* textHeight (cos (+ angleRad (* pi 0.5)))))
+    (setq offsetVY (* textHeight (sin (+ angleRad (* pi 0.5)))))
+    (setq offsetHX (* textHeight (cos angleRad)))
+    (setq offsetHY (* textHeight (sin angleRad)))
+    
+    (setq bpt1 (list (- (car midpoint) (* offsetHX 2)) (- (cadr midpoint) (* offsetHY 2))))
+    (setq bpt2 (list (+ (car midpoint) (* offsetHX 2)) (+ (cadr midpoint) (* offsetHY 2))))
+
+    (setq bpt1H (list (+ (car bpt1) offsetVX) (+ (cadr bpt1) offsetVY)))
+    (setq bpt1C (list (- (car bpt1) offsetHX) (- (cadr bpt1) offsetHY)))
+    (setq bpt1L (list (- (car bpt1) offsetVX) (- (cadr bpt1) offsetVY)))
+    
+    (setq bpt2H (list (+ (car bpt2) offsetVX) (+ (cadr bpt2) offsetVY)))
+    (setq bpt2C (list (+ (car bpt2) offsetHX) (+ (cadr bpt2) offsetHY)))
+    (setq bpt2L (list (- (car bpt2) offsetVX) (- (cadr bpt2) offsetVY)))
+    
+    ; Create a a polyline above and below the callout
+    (command "_.pline" bpt1H bpt2H "")
+    (command "_.pline" bpt1L bpt2L "")
+
+    ; Create semi-circles joining the polylines
+    (command "_.arc" bpt1H bpt1C bpt1L)
+    (command "_.arc" bpt2H bpt2C bpt2L)
   )
 
   (princ "\nCallout creation canceled.")
