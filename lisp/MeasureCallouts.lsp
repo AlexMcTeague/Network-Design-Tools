@@ -2,6 +2,9 @@
   (setq textHeight 3.961325)
   (setvar 'osmode 0) ; Turn off Object Snapping, which messes with object placement/math
   
+  (setq prevLayer (getvar "clayer"))
+  (command "_.CLAYER" "ST-NAME")
+  
   (while (setq pt1 (getpoint "\nSelect the first pole (point 1) or press Enter to exit: "))
     (setq pt2 (getpoint "\nSelect the second pole (point 2): "))
 
@@ -35,7 +38,7 @@
     (setq angle (* angleRad (/ 180 pi)))
 
     ; Create the text callout at the midpoint, rotated to match the angle
-    (command "_.TEXT" midPoint textHeight angle (strcat (itoa dist) "'"))
+    (command "_.TEXT" "J" "M" midPoint textHeight angle (strcat (itoa dist) "'"))
 
     (princ (strcat "\nAerial span footage: " (itoa dist) "'"))
     
@@ -45,8 +48,8 @@
     (setq offsetHX (* textHeight (cos angleRad)))
     (setq offsetHY (* textHeight (sin angleRad)))
     
-    (setq bpt1 (list (- (car midpoint) (* offsetHX 2)) (- (cadr midpoint) (* offsetHY 2))))
-    (setq bpt2 (list (+ (car midpoint) (* offsetHX 2)) (+ (cadr midpoint) (* offsetHY 2))))
+    (setq bpt1 (list (- (car midpoint) (* offsetHX 1.5)) (- (cadr midpoint) (* offsetHY 1.5))))
+    (setq bpt2 (list (+ (car midpoint) (* offsetHX 1.5)) (+ (cadr midpoint) (* offsetHY 1.5))))
 
     (setq bpt1H (list (+ (car bpt1) offsetVX) (+ (cadr bpt1) offsetVY)))
     (setq bpt1C (list (- (car bpt1) offsetHX) (- (cadr bpt1) offsetHY)))
@@ -65,6 +68,7 @@
     (command "_.arc" bpt2H bpt2C bpt2L)
   )
 
+  (command "_.CLAYER" prevLayer)
   (princ "\nCallout creation canceled.")
 )
 
