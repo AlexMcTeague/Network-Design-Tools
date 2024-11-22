@@ -23,10 +23,7 @@
     (setq dist (fix (+ dist 0.5))) ; Adds 0.5 and truncates to simulate rounding
 
     ; Find the midpoint of the two points
-    (setq midPoint (list
-      (/ (+ pt1X pt2X) 2.0)
-      (/ (+ pt1Y pt2Y) 2.0)
-    ))
+    (setq midPoint (getpoint "\nSelect the callout location: "))
 
     ; Calculate the angle in radians
     (setq angleRad (atan (/ 
@@ -51,13 +48,13 @@
     (setq bpt1 (list (- (car midpoint) (* offsetHX 1.5)) (- (cadr midpoint) (* offsetHY 1.5))))
     (setq bpt2 (list (+ (car midpoint) (* offsetHX 1.5)) (+ (cadr midpoint) (* offsetHY 1.5))))
 
-    (setq bpt1H (list (+ (car bpt1) offsetVX) (+ (cadr bpt1) offsetVY)))
-    (setq bpt1C (list (- (car bpt1) offsetHX) (- (cadr bpt1) offsetHY)))
-    (setq bpt1L (list (- (car bpt1) offsetVX) (- (cadr bpt1) offsetVY)))
+    (setq bpt1H (list (+ (car bpt1) (* offsetVX 0.65)) (+ (cadr bpt1) (* offsetVY 0.65))))
+    (setq bpt1C (list (- (car bpt1) (* offsetHX 0.65)) (- (cadr bpt1) (* offsetHY 0.65))))
+    (setq bpt1L (list (- (car bpt1) (* offsetVX 0.65)) (- (cadr bpt1) (* offsetVY 0.65))))
     
-    (setq bpt2H (list (+ (car bpt2) offsetVX) (+ (cadr bpt2) offsetVY)))
-    (setq bpt2C (list (+ (car bpt2) offsetHX) (+ (cadr bpt2) offsetHY)))
-    (setq bpt2L (list (- (car bpt2) offsetVX) (- (cadr bpt2) offsetVY)))
+    (setq bpt2H (list (+ (car bpt2) (* offsetVX 0.65)) (+ (cadr bpt2) (* offsetVY 0.65))))
+    (setq bpt2C (list (+ (car bpt2) (* offsetHX 0.65)) (+ (cadr bpt2) (* offsetHY 0.65))))
+    (setq bpt2L (list (- (car bpt2) (* offsetVX 0.65)) (- (cadr bpt2) (* offsetVY 0.65))))
     
     ; Create a a polyline above and below the callout
     (command "_.pline" bpt1H bpt2H "")
