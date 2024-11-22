@@ -1,13 +1,10 @@
 (defun c:MeasureCallouts ( / textHeight prevLayer pt1 pt2 dist midPoint angleRad angleDeg)
   (setq textHeight 3.961325)
-  (setvar 'osmode 0) ; Turn off Object Snapping, which messes with object placement/math
-  
-  (setq prevLayer (getvar "clayer"))
-  (command "_.CLAYER" "ST-NAME")
-  
+
   (while (setq pt1 (getpoint "\nSelect the first pole (point 1) or press Enter to exit: "))
     (setq pt2 (getpoint "\nSelect the second pole (point 2): "))
 
+    ; Get the X and Y coordinates of each point
     (setq pt1X (car pt1))
     (setq pt1Y (cadr pt1))
     (setq pt2X (car pt2))
@@ -18,14 +15,10 @@
       (expt (- pt2X pt1X) 2) 
       (expt (- pt2Y pt1Y) 2)
     )))
+    (setq dist (fix (+ dist 0.5))) ; Add 0.5 and truncate to round the distance to the nearest foot
+    (princ (strcat "\nAerial span footage: " (itoa dist) "'"))
 
-    ; Round the distance to the nearest foot
-    (setq dist (fix (+ dist 0.5))) ; Adds 0.5 and truncates to simulate rounding
-
-    ; Find the midpoint of the two points
-    (setq midPoint (getpoint "\nSelect the callout location: "))
-
-    ; Calculate the angle in radians
+    ; Calculate the angle in radians and degrees
     (if (= pt2X pt1X)
       (if (> pt2Y pt1Y)
         (setq angleRad (* pi 0.5))
@@ -36,15 +29,11 @@
         (- pt2X pt1X)
       )))
     )
-
-    ; Convert radians to degrees
     (setq angleDeg (* angleRad (/ 180 pi)))
-
-    ; Create the text callout at the midpoint, rotated to match the angle
-    (command "_.TEXT" "J" "M" midPoint textHeight angleDeg (strcat (itoa dist) "'"))
-
-    (princ (strcat "\nAerial span footage: " (itoa dist) "'"))
     
+    ; Ask the user for the callout location
+    (setq midPoint (getpoint "\nSelect the callout location: "))
+
     ; Offset the chosen points by the text height and angle
     (setq offsetVX (* textHeight (cos (+ angleRad (* pi 0.5)))))
     (setq offsetVY (* textHeight (sin (+ angleRad (* pi 0.5)))))
@@ -62,6 +51,21 @@
     (setq bpt2C (list (+ (car bpt2) (* offsetHX 0.65)) (+ (cadr bpt2) (* offsetHY 0.65))))
     (setq bpt2L (list (- (car bpt2) (* offsetVX 0.65)) (- (cadr bpt2) (* offsetVY 0.65))))
     
+    ; Turn off Object Snapping, which messes with object placement/math
+    (setq prevOSMode (getvar "osmode"))
+    (setvar 'osmode 0)
+    
+    ; Change to Street Name layer
+    (setq prevLayer (getvar "clayer"))
+    (command "_.CLAYER" "ST-NAME")
+    
+    ; Change color to ByLayer
+    (setq prevColor (getvar "cecolor"))
+    (command "_.CECOLOR" "ByLayer")
+    
+    ; Create the text callout at the midpoint, rotated to match the angle
+    (command "_.TEXT" "J" "M" midPoint textHeight angleDeg (strcat (itoa dist) "'"))
+    
     ; Create a a polyline above and below the callout
     (command "_.pline" bpt1H bpt2H "")
     (command "_.pline" bpt1L bpt2L "")
@@ -69,9 +73,13 @@
     ; Create semi-circles joining the polylines
     (command "_.arc" bpt1H bpt1C bpt1L)
     (command "_.arc" bpt2H bpt2C bpt2L)
+    
+    ; Return to previous state
+    (setvar 'osmode prevOSMode)
+    (command "_.CLAYER" prevLayer)
+    (command "_.cecolor" prevColor)
   )
 
-  (command "_.CLAYER" prevLayer)
   (princ "\nCallout creation canceled.")
 )
 
