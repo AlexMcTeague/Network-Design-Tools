@@ -1,4 +1,4 @@
-(defun c:MeasureCallouts ( / pt1 pt2 dist midPoint angle)
+(defun c:MeasureCallouts ( / textHeight prevLayer pt1 pt2 dist midPoint angleRad angleDeg)
   (setq textHeight 3.961325)
   (setvar 'osmode 0) ; Turn off Object Snapping, which messes with object placement/math
   
@@ -26,16 +26,22 @@
     (setq midPoint (getpoint "\nSelect the callout location: "))
 
     ; Calculate the angle in radians
-    (setq angleRad (atan (/ 
-      (- pt2Y pt1Y)
-      (- pt2X pt1X)
-    )))
+    (if (= pt2X pt1X)
+      (if (> pt2Y pt1Y)
+        (setq angleRad (* pi 0.5))
+        (setq angleRad (* pi 1.5))
+      )
+      (setq angleRad (atan (/ 
+        (- pt2Y pt1Y)
+        (- pt2X pt1X)
+      )))
+    )
 
     ; Convert radians to degrees
-    (setq angle (* angleRad (/ 180 pi)))
+    (setq angleDeg (* angleRad (/ 180 pi)))
 
     ; Create the text callout at the midpoint, rotated to match the angle
-    (command "_.TEXT" "J" "M" midPoint textHeight angle (strcat (itoa dist) "'"))
+    (command "_.TEXT" "J" "M" midPoint textHeight angleDeg (strcat (itoa dist) "'"))
 
     (princ (strcat "\nAerial span footage: " (itoa dist) "'"))
     
