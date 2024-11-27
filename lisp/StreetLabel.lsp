@@ -1,9 +1,32 @@
-(defun c:StreetLabel (/ p line)
+(defun c:StreetLabel (/ line pt)
+  ; Load the extended AutoLISP functions related to ActiveX support
+  (vl-load-com)
+  
+  ; Helper function: get text from clipboard
+  (defun GetClipBoardText( / htmlfile result )
+    (setq result
+      (vlax-invoke
+        (vlax-get
+          (vlax-get
+            (setq htmlfile (vlax-create-object "htmlfile"))
+            'ParentWindow
+          )
+          'ClipBoardData
+        )
+        'GetData
+        "Text"
+      )
+    )
+    (vlax-release-object htmlfile)
+    result
+  )
+  
+  
   ; Config
   (setq textHeight 5.267384)
   (setq layer "ST-NAME")
   (setq color "ByLayer")
-  (setq streetName "Test St")
+  (setq streetName (GetClipBoardText))
   
   ; Ask the user to select the centerline, and the destination for the callout
   (setq line (car (entsel "\nSelect street centerline: ")))
