@@ -19,6 +19,11 @@
   ))
   (setq theta (/ (* 180.0 theta) pi))
   
+  ; Correct the angle so text is never flipped upside down
+  (if (and (> theta 90) (< theta 270))
+    (setq theta (+ theta 180))
+  )
+  
   ; Switch to the Street Name Layer
   (command "_LAYER"
     "SET" "ST-NAME"
