@@ -1,10 +1,8 @@
-(defun c:MeasureArrow ( / textHeight prevLayer pt1 pt2 dist midPt angleRad angleDeg)
+(defun c:MeasureArrow ( / prevLayer pt1 pt2 dist midPt)
   ; Define a helper function to find the midpoint of two points
   (defun find-midpoint (pt1 pt2)
     (mapcar '(lambda (a b) (/ (+ a b) 2.0)) pt1 pt2)
   )  
-
-  (setq textHeight 3.961325)
 
   (while (setq pt1 (getpoint "\nSelect the first pole (point 1) or press Enter to exit: "))
     (setq pt2 (getpoint "\nSelect the second pole (point 2): "))
