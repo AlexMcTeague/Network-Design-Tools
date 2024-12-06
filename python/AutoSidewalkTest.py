@@ -5,12 +5,14 @@ import numpy as np
 
 # Constants
 image_path = "C:/Users/amcteague/Downloads/example_geolocation.png"
-autocad_origin = (2023667.375, 439410.177)
+autocad_origin = (2023675.152, 439412.454)
 scale = 0.8
 
 # Initialize AutoCAD
 acad = Autocad(create_if_not_exists=True)
 doc = acad.doc
+
+acad.get_selection("Test")
 
 # Load the image
 if os.path.exists(image_path):
@@ -24,7 +26,7 @@ if os.path.exists(image_path):
 else:
     print("File not found at " + image_path)
 
-# Apply edge detection to find sidewalks
+# Apply edge detection
 edges = cv2.Canny(image, 100, 100)
 # Find contours which could represent sidewalks
 contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -37,7 +39,7 @@ def image_to_autocad_coords(x, y, image_width, image_height, autocad_origin, sca
     autocad_y = autocad_origin[1] + (image_height - y) * scale
     return APoint(autocad_x, autocad_y)
 
-# Draw the detected sidewalks in AutoCAD
+# Draw the detected shapes in AutoCAD
 for contour in simplified_contours:
     for i in range(len(contour) - 1):
         start_point = image_to_autocad_coords(contour[i][0][0], contour[i][0][1], image.shape[1], image.shape[0], autocad_origin, scale)
