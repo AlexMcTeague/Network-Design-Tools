@@ -1,0 +1,7 @@
+(defun c:CenterText ( / txtset ename entTxt)
+  (print "Select entire import")
+  (setq txtset (ssget '((0 . "*TEXT") (8 . "PDF*_Text"))))
+  (setq ename (ssname txtset 0))
+  (setq entTxt (entget ename))
+  (command "_JUSTIFYTEXT" entTxt "" "MC")
+)
