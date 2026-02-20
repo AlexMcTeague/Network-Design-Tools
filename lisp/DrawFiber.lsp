@@ -1,4 +1,6 @@
 (defun c:DrawFiber (/ ent obj base-pt fiber-base-pt fiber-input buffer-num fiber-num layer fiber-pos start-pt end-pt pt1 pt2 pt3 pt4)
+  ; Written by Alex McTeague
+  
   ; Ask the user to select an object
   (setq ent (car (entsel "\nSelect starting object: ")))
   (setq obj (vlax-ename->vla-object ent))
@@ -44,6 +46,9 @@
               ((= obj-type2 "Splice Case")
                 (setq fiber-base-pt base-pt2)
               )
+              ((= obj-type2 "SHEATH")
+                (setq fiber-base-pt base-pt2)
+              )
               (t
                 (progn
                   (princ "\nError: Splice Case requested, incorrect object type selected.")
@@ -78,6 +83,9 @@
           (setq obj-type2 (vla-get-EffectiveName obj2))
           (cond
             ((= obj-type2 "Splice Case")
+              (setq fiber-base-pt base-pt2)
+            )
+            ((= obj-type2 "SHEATH")
               (setq fiber-base-pt base-pt2)
             )
             (t

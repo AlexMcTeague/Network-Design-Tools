@@ -1,0 +1,4 @@
+* Measure leg footages
+* Place taps (auto-detect count)
+* Auto-sum house counts, tap counts, etc
+* Long drop labeling (auto-detect may or may not be possible unless integrated with Google Earth)
