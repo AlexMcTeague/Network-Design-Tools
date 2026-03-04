@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:SumFootage ()
   (vl-load-com)  ;; Ensure Visual LISP functions are available
   (setq total 0)

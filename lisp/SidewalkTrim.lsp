@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:SidewalkTrim (/ selPt1 selPt2 selSet entList ent1 ent2 obj1 obj2 intPoints intPointsList intCount newAssoc intList objName startPt endPt)
   (vl-load-com) ; Loads the extended AutoLISP functions related to ActiveX support
   

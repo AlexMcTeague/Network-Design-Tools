@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:StreetLabel (/ line pt)
   ; Load the extended AutoLISP functions related to ActiveX support
   (vl-load-com)

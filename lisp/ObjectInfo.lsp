@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:objinfo (/ ent obj)
   (vl-load-com) ; Loads the extended AutoLISP functions related to ActiveX support
   

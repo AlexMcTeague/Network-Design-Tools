@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:InsertNAP (/ hc portnum blockname insertionpoint scale rotation)
   (setq insertionpoint (getpoint "\nPick insertion point: "))
   

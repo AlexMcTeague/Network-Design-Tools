@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:justify_text_to_middle_center ()
   (setq ss (ssget '((0 . "*TEXT") (8 . "PDF*_Text"))))
   (if ss

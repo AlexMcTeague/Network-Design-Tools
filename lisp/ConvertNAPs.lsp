@@ -1,5 +1,5 @@
+; Written by Alex McTeague
 (defun c:ConvertNAPs (/)
-  ; Written by Alex McTeague
   (setq debug nil) ; Set to t or nil to enable/disable debug messages
   
   ; (defun GetVisibilityState ( blk / vla_obj props prop prop_name )

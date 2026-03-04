@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:polestamp (/ ent obj)
   (vl-load-com) ; Loads the extended AutoLISP functions related to ActiveX support
   

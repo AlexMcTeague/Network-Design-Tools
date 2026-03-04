@@ -1,6 +1,5 @@
+; Written by Alex McTeague
 (defun c:DrawFiber (/ ent obj base-pt fiber-base-pt fiber-input buffer-num fiber-num layer fiber-pos start-pt end-pt pt1 pt2 pt3 pt4)
-  ; Written by Alex McTeague
-  
   ; Ask the user to select an object
   (setq ent (car (entsel "\nSelect starting object: ")))
   (setq obj (vlax-ename->vla-object ent))

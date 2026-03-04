@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 # Constants
-image_path = "C:/Users/amcteague/Downloads/example_geolocation.png"
+image_path = r"C:\Users\amcte\Downloads\example_geolocation.png"
 autocad_origin = (2023675.152, 439412.454)
 scale = 0.8
 

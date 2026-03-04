@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:CenterText ( / txtset ename entTxt)
   (print "Select entire import")
   (setq txtset (ssget '((0 . "*TEXT") (8 . "PDF*_Text"))))

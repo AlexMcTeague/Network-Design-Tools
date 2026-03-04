@@ -1,6 +1,5 @@
-(defun c:FixPDFImport ( / txtSet hatchSet enameCase objCase minPt maxPt pt1 pt2 ptCase echo i caseCt enameTxt j entTxt str strPre strPost startPt rot textHeight scale dist endPt len)
-  ; Written by Alex McTeague
-  
+; Written by Alex McTeague
+(defun c:FixPDFImport ( / txtSet hatchSet enameCase objCase minPt maxPt pt1 pt2 ptCase echo i caseCt enameTxt j entTxt str strPre strPost startPt rot textHeight scale dist endPt len)  
   (print "Select entire import")
   (setq txtSet (ssget '((0 . "*TEXT") (8 . "PDF*_Text"))))
   

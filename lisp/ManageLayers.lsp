@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:TurnOnLayer (/ layerName)
   (setq layerName (getstring T "Layer name: "))
   (command "_.layer" "_thaw" layerName "_on" layerName "")

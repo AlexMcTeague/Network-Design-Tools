@@ -1,3 +1,4 @@
+; Written by Alex McTeague
 (defun c:AlignToCenter (/ )
   ; Define a helper function to find the midpoint of two points
   (defun find-midpoint (pt1 pt2)

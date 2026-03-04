@@ -1,5 +1,6 @@
+; Written by Alex McTeague
 (defun c:MeasureCallouts ( / textHeight prevLayer pt1 pt2 dist midPoint angleRad angleDeg)
-  (setq textHeight 3.961325)
+  (setq textHeight 7)
 
   (while (setq pt1 (getpoint "\nSelect the first pole (point 1) or press Enter to exit: "))
     (setq pt2 (getpoint "\nSelect the second pole (point 2): "))
@@ -57,7 +58,7 @@
     
     ; Change to Street Name layer
     (setq prevLayer (getvar "clayer"))
-    (command "_.CLAYER" "ST-NAME")
+    (command "_.CLAYER" "0")
     
     ; Change color to ByLayer
     (setq prevColor (getvar "cecolor"))
@@ -65,15 +66,6 @@
     
     ; Create the text callout at the midpoint, rotated to match the angle
     (command "_.TEXT" "J" "M" midPoint textHeight angleDeg (strcat (itoa dist) "'"))
-    
-    ; Create a a polyline above and below the callout
-    (command "_.pline" bpt1H bpt2H "")
-    (command "_.pline" bpt1L bpt2L "")
-
-    ; Create semi-circles joining the polylines
-    (command "_.arc" bpt1H bpt1C bpt1L)
-    (command "_.arc" bpt2H bpt2C bpt2L)
-    
     ; Return to previous state
     (setvar 'osmode prevOSMode)
     (command "_.CLAYER" prevLayer)
